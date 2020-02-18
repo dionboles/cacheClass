@@ -1,25 +1,21 @@
 
-class Cache {
-	cacheData = {}
+class Cacher {
+    private cacheData = {}
 	
-	constructor(){
-		
-	}
-	get (key){
+	constructor(){}
+	public get (key:any){
 		 if(this.cacheData.hasOwnProperty(key) && this.cacheData[key].val){
 			  return this.cacheData[key].val;
 		 }
 	}
 	
-	set (key,value,expiry){
+	public set (key:any,value:any,expiry:any){
 		 this.clear(key);
 		 
-		 let to = false;
+		 let to:any= false ;
 		 
 		 if(expiry && parseInt(expiry) > 0){
-			  to = setTimeout( () =>{
-					this.clear(key);
-			  },parseInt(expiry));
+			  to = setTimeout( () =>{this.clear(key);},parseInt(expiry));
 		 }
 		 this.cacheData[key] = {
 			  expiry : expiry,
@@ -27,13 +23,16 @@ class Cache {
 			  timeout: to,
 		 }
 	}
-	clear(key){
+	public clear(key:any){
 	  if(this.cacheData.hasOwnProperty(key)){
 			if(this.cacheData[key].to){
-				 clearTimeout(Cache.cacheData[key].to);
+				 clearTimeout(this.cacheData[key].to);
 				}
 		  delete this.cacheData[key];
 		  return true;
 	 }
 	}
 };
+
+
+export default Cacher;
